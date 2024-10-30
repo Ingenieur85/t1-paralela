@@ -1,7 +1,7 @@
 # Makefile for compiling bsearch_serial with chrono timing library
 
 CC = gcc
-CFLAGS = -Wall -O3
+CFLAGS = -Wall -Wextra -Wpedantic -O3
 
 # Target executable
 TARGET = parteA
