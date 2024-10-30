@@ -1,14 +1,20 @@
 #!/bin/bash
 
-# Define the sets of sizes and thread counts you want to test
-array_sizes=(1000 5000 10000)       # Example array sizes
-thread_counts=(1 2 4 8)             # Example thread counts
-repetitions=10                      # Number of times each test should be run
+if [ -z "$1" ]; then
+    echo "Usage: $0 <executable_name>"
+    exit 1
+fi
+executable="$1"
+
+#parameters
+array_sizes=(1000000 2000000 4000000 8000000 16000000)
+thread_counts=(1 2 3 4 5 6 7 8)
+repetitions=10
 
 # Run the tests and save results to separate CSV files for each array size
 for size in "${array_sizes[@]}"; do
     # Create a separate CSV file for each array size
-    output_file="test_results_${size}.csv"
+    output_file="${executable}_data_${size}.csv"
     
     # Write the CSV header for this array size
     echo "Array Size,Thread Count,Execution Times,Throughputs" > "$output_file"
@@ -21,7 +27,7 @@ for size in "${array_sizes[@]}"; do
         # Run each combination 'repetitions' times
         for ((i=1; i<=repetitions; i++)); do
             # Run the executable and capture the output
-            output=$(./parteA "$size" "$threads")
+            output=$("./$executable" "$size" "$threads")
             
             # Extract the time and throughput metrics
             execution_time=$(echo "$output" | grep -oP '(?<=total_time_in_seconds: )[^ ]*')
@@ -36,6 +42,3 @@ for size in "${array_sizes[@]}"; do
         echo "$size,$threads,${times[*]},${throughputs[*]}" >> "$output_file"
     done
 done
-
-# Combine CSV files into single file
-csvstack *.csv -n $(basename -s .csv *.csv) -o test_results.csv

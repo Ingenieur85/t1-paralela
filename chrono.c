@@ -21,7 +21,6 @@
 
 #include "chrono.h"
 
- 
 
   void chrono_reset( chronometer_t *chrono )
   {
