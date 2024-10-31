@@ -12,7 +12,9 @@ thread_counts=(1 2 3 4 5 6 7 8)
 repetitions=10
 
 output_file="${executable}_data.csv"
-echo "Fazendo testes para tamanho $executable" > "$output_file"
+echo "Fazendo testes para $executable" > "$output_file"
+echo "Tamanho do Vetor","Threads","Tempo (s)","MegaOPs" >> "$output_file"
+
 
 # Run the tests and save results to separate CSV files for each array size
 for size in "${array_sizes[@]}"; do
@@ -20,11 +22,11 @@ for size in "${array_sizes[@]}"; do
     #output_file="${executable}_data_${size}.csv"
     
     # Write the CSV header for this array size
-    echo >> "$output_file"
-    echo "Fazendo testes para tamanho $size" >> "$output_file"
+    #echo >> "$output_file"
+    #echo "Fazendo testes para tamanho $size" >> "$output_file"
     
     for threads in "${thread_counts[@]}"; do
-        echo >> "$output_file"
+        #echo >> "$output_file"
         # Arrays to store results for each metric
         times=()
         throughputs=()
@@ -44,10 +46,10 @@ for size in "${array_sizes[@]}"; do
         done
         
         # Write the results for this array size and thread count to the CSV file
-        echo "Threads: $threads" >> "$output_file"
-        echo "Tempo (s)","OPs/s" >> "$output_file"
+        #echo "Threads: $threads" >> "$output_file"
+        #echo "Tempo (s)","OPs/s" >> "$output_file"
         for ((i=0; i<repetitions; i++)); do
-            echo ${times[i]},${throughputs[i]} >> "$output_file"
+            echo "$size","$threads",${times[i]},${throughputs[i]} >> "$output_file"
         done
     done
 done
