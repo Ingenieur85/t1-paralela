@@ -69,3 +69,10 @@
                   s, chrono->xtotal_ns, chrono->xn_events*loop_count, 
                                   chrono->xtotal_ns/(chrono->xn_events*loop_count) );
   }
+
+void print_array(long long int* array, int n) {
+    for (int i = 0; i < n; i++) {
+        printf("%lld ", array[i]);
+    }
+    printf("\n");
+}

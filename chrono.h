@@ -22,4 +22,6 @@ void chrono_stop(chronometer_t *chrono);
 void chrono_reportTime(chronometer_t *chrono, char *s);
 void chrono_report_TimeInLoop(chronometer_t *chrono, char *s, int loop_count);
 
+void print_array(long long int* array, int n);
+
 #endif

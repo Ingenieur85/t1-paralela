@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Fabiano A. de Sá Filho
+# GRR 20223831
+
 if [ -z "$1" ]; then
     echo "Usage: $0 <executable_name>"
     exit 1
@@ -13,7 +16,7 @@ repetitions=10
 
 output_file="${executable}_data.csv"
 echo "Fazendo testes para $executable" > "$output_file"
-echo "Tamanho do Vetor","Threads","Tempo (s)","MegaOPs" >> "$output_file"
+echo "Tamanho do Vetor","Threads","Tempo (ms)","MegaOPs" >> "$output_file"
 
 
 # Run the tests and save results to separate CSV files for each array size

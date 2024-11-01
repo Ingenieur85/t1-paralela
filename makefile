@@ -1,23 +1,29 @@
-# Makefile for compiling bsearch_serial with chrono timing library
+# Makefile for compiling both parteA and partB with chrono timing library
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Wpedantic -O3
 
-# Target executable
-TARGET = parteA
+# Target executables
+TARGETS = parteA parteB
 
-# Source files
-SRC = parteA.c chrono.c
+# Common object files
+COMMON_OBJ = chrono.o
 
-# Object files
-OBJ = $(SRC:.c=.o)
+# Program-specific source and object files
+PARTA_SRC = parteA.c
+PARTB_SRC = parteB.c
+PARTA_OBJ = $(PARTA_SRC:.c=.o)
+PARTB_OBJ = $(PARTB_SRC:.c=.o)
 
 # Default target
-all: $(TARGET)
+all: $(TARGETS)
 
-# Linking target executable
-$(TARGET): $(OBJ)
-	$(CC) $(CFLAGS) -o $(TARGET) $(OBJ)
+# Linking target executables
+parteA: $(PARTA_OBJ) $(COMMON_OBJ)
+	$(CC) $(CFLAGS) -o $@ $^
+
+parteB: $(PARTB_OBJ) $(COMMON_OBJ)
+	$(CC) $(CFLAGS) -o $@ $^
 
 # Compile .c files into .o files
 %.o: %.c
@@ -25,10 +31,6 @@ $(TARGET): $(OBJ)
 
 # Clean up build files
 clean:
-	rm -f $(OBJ) $(TARGET)
+	rm -f $(COMMON_OBJ) $(PARTA_OBJ) $(PARTB_OBJ) $(TARGETS)
 
-# Run the program with a default size argument
-run: $(TARGET)
-	./$(TARGET) 1000000  # Default test with 1 million elements
-
-.PHONY: all clean run
+.PHONY: all clean
